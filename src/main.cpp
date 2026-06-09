@@ -1,6 +1,6 @@
 #include "App.h"
 #include "Size.h"
-#include "Rectangle.h"
+#include "TextBlock.h"
 #include "Border.h"
 
 #include <SDL3/SDL.h>
@@ -16,11 +16,12 @@ protected:
         myborder->strokeWeight = 4;
         myborder->padding = Thickness(10,5,10,30);
 
-        Rectangle *myRectangle = new Rectangle();
-        myRectangle->fill = Colors::Blue;
+        TextBlock *myTb = new TextBlock();
+        myTb->text = "hello textblock";
+        myTb->fontFamily="/home/dtilm/Development/TilmUI/src/assets/fonts/OpenSans-Regular.ttf";
+        myTb->fontSize = 32.0f;
 
-        myborder->content = myRectangle;
-
+        myborder->content = myTb;
         window->content = myborder;
     }
 };
@@ -29,7 +30,7 @@ int main(int argc, char* argv[])
 {
     MyApp *app = new MyApp();
 
-    app->Run();
+    app->Run(1);
 
     delete app;
 }

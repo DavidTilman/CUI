@@ -11,8 +11,10 @@ public:
 
     Window *window;
 
-    void Run();
+    void Run(int debug_print_visual_tree);
 
 protected:
     virtual void Content() {}
+private:
+    void debug_print_content();
 };
