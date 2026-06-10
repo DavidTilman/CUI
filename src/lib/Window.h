@@ -19,7 +19,7 @@ public:
 
     void Present();
     SDL_Window* GetSDLWindow() { return window; }
-    void debug_print_content(int depth);
+    void debug_print_content(const std::string& prefix, bool is_last);
 private:
     SDL_Window*   window;
     SDL_Renderer* renderer;

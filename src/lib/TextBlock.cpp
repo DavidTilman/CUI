@@ -4,6 +4,7 @@
 #include <SDL3/SDL_render.h>
 #include <SDL3_ttf/SDL_ttf.h>
 #include <cstdio>
+#include <string>
 
 void TextBlock::Draw(SDL_Renderer* renderer, SDL_FRect* pane) {
     if (!this->text) return;
@@ -26,15 +27,14 @@ void TextBlock::Draw(SDL_Renderer* renderer, SDL_FRect* pane) {
     TTF_CloseFont(font);
 }
 
-void TextBlock::debug_print_content(int depth) {
-    for (int i = 0; i < depth; i++) {
-        printf("|   ");
-    }
-
-    printf("TextBlock @ %p (\n", this);
-
-    for (int i = 0; i < depth; i++) {
-        printf("|   ");
-    }
-    printf(")\n");
+void TextBlock::debug_print_content(const std::string& prefix, bool is_last) {
+    const char* conn = is_last ? "└── " : "├── ";
+    std::string ppfx = prefix + (is_last ? "    " : "│   ") + "│  ";
+    printf("%s%sTextBlock @ %p\n", prefix.c_str(), conn, this);
+    printf("%s%-12s = \"%s\"\n",          ppfx.c_str(), "text",       text       ? text       : "(null)");
+    printf("%s%-12s = \"%s\"\n",          ppfx.c_str(), "fontFamily", fontFamily ? fontFamily : "(null)");
+    printf("%s%-12s = %.1f\n",            ppfx.c_str(), "fontSize",   fontSize);
+    printf("%s%-12s = #%02X%02X%02X%02X\n", ppfx.c_str(), "foreground", foreground.R, foreground.G, foreground.B, foreground.A);
+    printf("%s%-12s = #%02X%02X%02X%02X\n", ppfx.c_str(), "background", background.R, background.G, background.B, background.A);
+    printf("%s%-12s = %.0f x %.0f\n",     ppfx.c_str(), "size",       width, height);
 }

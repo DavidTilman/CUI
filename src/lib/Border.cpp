@@ -1,6 +1,7 @@
 #include "Border.h"
 #include <SDL3/SDL_render.h>
 #include <cstdio>
+#include <string>
 
 void Border::Draw(SDL_Renderer* renderer, SDL_FRect* pane) {
     SDL_FRect dst = Measure(pane);
@@ -31,16 +32,15 @@ void Border::Draw(SDL_Renderer* renderer, SDL_FRect* pane) {
     }
 }
 
-void Border::debug_print_content(int depth) {
-    for (int i = 0; i < depth; i++) {
-        printf("|   ");
-    }
-
-    printf("Border @ %p (\n", this);
-    if (content) content->debug_print_content(depth + 1);
-
-    for (int i = 0; i < depth; i++) {
-        printf("|   ");
-    }
-    printf(")\n");
+void Border::debug_print_content(const std::string& prefix, bool is_last) {
+    const char* conn = is_last ? "└── " : "├── ";
+    std::string cpfx = prefix + (is_last ? "    " : "│   ");
+    std::string ppfx = cpfx + "│  ";
+    printf("%s%sBorder @ %p\n", prefix.c_str(), conn, this);
+    printf("%s%-14s = #%02X%02X%02X%02X\n",  ppfx.c_str(), "background",   background.R, background.G, background.B, background.A);
+    printf("%s%-14s = #%02X%02X%02X%02X\n",  ppfx.c_str(), "stroke",       stroke.R, stroke.G, stroke.B, stroke.A);
+    printf("%s%-14s = %u\n",                  ppfx.c_str(), "strokeWeight", strokeWeight);
+    printf("%s%-14s = l=%u r=%u t=%u b=%u\n", ppfx.c_str(), "padding",     padding.l, padding.r, padding.t, padding.b);
+    printf("%s%-14s = %.0f x %.0f\n",         ppfx.c_str(), "size",        width, height);
+    if (content) content->debug_print_content(cpfx, true);
 }

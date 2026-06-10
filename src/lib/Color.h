@@ -1,5 +1,6 @@
 #pragma once
 #include <stdint.h>
+#include <ostream>
 
 typedef struct {
     uint8_t R;
@@ -7,6 +8,10 @@ typedef struct {
     uint8_t B;
     uint8_t A;
 } Color;
+
+inline std::ostream& operator<<(std::ostream& os, const Color& c) {
+    return os << "Color(r=" << +c.R << ", g=" << +c.G << ", b=" << +c.B << ", a=" << +c.A << ")";
+}
 
 class Colors {
 public:

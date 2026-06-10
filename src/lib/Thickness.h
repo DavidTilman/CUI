@@ -1,5 +1,6 @@
 #pragma once
 #include <cstdint>
+#include <ostream>
 
 class Thickness {
 public:
@@ -10,3 +11,7 @@ public:
     ~Thickness();
     uint32_t l, r, t, b;
 };
+
+inline std::ostream& operator<<(std::ostream& os, const Thickness& t) {
+    return os << "Thickness(l=" << t.l << ", r=" << t.r << ", t=" << t.t << ", b=" << t.b << ")";
+}

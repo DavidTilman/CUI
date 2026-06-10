@@ -1,6 +1,7 @@
 #include "Window.h"
 #include <SDL3/SDL_rect.h>
 #include <cstdio>
+#include <string>
 
 Window::Window() {
     if (!SDL_Init(SDL_INIT_VIDEO)) {
@@ -37,19 +38,15 @@ void Window::Present() {
     SDL_RenderPresent(renderer);
 }
 
-void Window::debug_print_content(int depth) {
-    for (int i = 0; i < depth; i++) {
-        printf("|   ");
-    }
-
-    printf("Window @ %p (\n", this);
-
-    if (content) content->debug_print_content(depth + 1);
-
-    for (int i = 0; i < depth; i++) {
-        printf("|   ");
-    }
-    printf(")\n");
+void Window::debug_print_content(const std::string& prefix, bool is_last) {
+    const char* conn = is_last ? "└── " : "├── ";
+    std::string cpfx = prefix + (is_last ? "    " : "│   ");
+    std::string ppfx = cpfx + "│  ";
+    printf("%s%sWindow @ %p\n", prefix.c_str(), conn, this);
+    printf("%s%-12s = (%u,%u)\n",            ppfx.c_str(), "size",       size.x, size.y);
+    printf("%s%-12s = #%02X%02X%02X%02X\n",  ppfx.c_str(), "background", background.R, background.G, background.B, background.A);
+    printf("%s%-12s = l=%u r=%u t=%u b=%u\n", ppfx.c_str(), "padding",   padding.l, padding.r, padding.t, padding.b);
+    if (content) content->debug_print_content(cpfx, true);
 }
 
 Window::~Window() {
