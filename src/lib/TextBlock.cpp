@@ -3,6 +3,7 @@
 #include <SDL3/SDL_oldnames.h>
 #include <SDL3/SDL_render.h>
 #include <SDL3_ttf/SDL_ttf.h>
+#include <cstdio>
 
 void TextBlock::Draw(SDL_Renderer* renderer, SDL_FRect* pane) {
     if (!this->text) return;
@@ -23,4 +24,17 @@ void TextBlock::Draw(SDL_Renderer* renderer, SDL_FRect* pane) {
     TTF_DestroyText(ttfText);
     TTF_DestroyRendererTextEngine(engine);
     TTF_CloseFont(font);
+}
+
+void TextBlock::debug_print_content(int depth) {
+    for (int i = 0; i < depth; i++) {
+        printf("|   ");
+    }
+
+    printf("TextBlock @ %p (\n", this);
+
+    for (int i = 0; i < depth; i++) {
+        printf("|   ");
+    }
+    printf(")\n");
 }

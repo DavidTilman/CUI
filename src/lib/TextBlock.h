@@ -7,6 +7,7 @@
 class TextBlock : public UIElement {
 public:
     void Draw(SDL_Renderer* renderer, SDL_FRect* pane) override;
+    void debug_print_content(int depth) override;
     const char* text = nullptr;
     Color background = Colors::Black;
     Color foreground = Colors::White;

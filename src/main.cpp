@@ -1,28 +1,41 @@
 #include "App.h"
+#include "Rectangle.h"
 #include "Size.h"
 #include "TextBlock.h"
 #include "Border.h"
 
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
+#include "Thickness.h"
+#include "UniformGrid.h"
+
 class MyApp : public App {
 protected:
     void Content() override {
-        window->background = Colors::DarkGray;
-        window->size = Size {1200,700};
-        window->padding = Thickness(10);
+        UniformGrid *grid = new UniformGrid();
+        grid->columns = 2;
+        grid->rows = 2;
 
-        Border *myborder = new Border();
-        myborder->strokeWeight = 4;
-        myborder->padding = Thickness(10,5,10,30);
+        Rectangle *red = new Rectangle();
+        Rectangle *green = new Rectangle();
+        Rectangle *blue = new Rectangle();
+        Rectangle *yellow = new Rectangle();
 
-        TextBlock *myTb = new TextBlock();
-        myTb->text = "hello textblock";
-        myTb->fontFamily="/home/dtilm/Development/TilmUI/src/assets/fonts/OpenSans-Regular.ttf";
-        myTb->fontSize = 32.0f;
+        red->fill = Colors::Red;
+        green->fill = Colors::Green;
+        blue->fill = Colors::Blue;
+        yellow->fill = Colors::Yellow;
 
-        myborder->content = myTb;
-        window->content = myborder;
+        grid->AddChild(red, 0, 0);
+        grid->AddChild(yellow, 1, 0);
+        grid->AddChild(green, 0, 1);
+        grid->AddChild(blue, 1, 1);
+
+        Border *border = new Border();
+        border->padding = Thickness(10);
+
+        border->content = grid;
+        window->content = border;
     }
 };
 

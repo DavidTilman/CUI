@@ -19,6 +19,7 @@ public:
 
     void Present();
     SDL_Window* GetSDLWindow() { return window; }
+    void debug_print_content(int depth);
 private:
     SDL_Window*   window;
     SDL_Renderer* renderer;

@@ -1,5 +1,6 @@
 #include "Border.h"
 #include <SDL3/SDL_render.h>
+#include <cstdio>
 
 void Border::Draw(SDL_Renderer* renderer, SDL_FRect* pane) {
     SDL_FRect dst = Measure(pane);
@@ -28,4 +29,18 @@ void Border::Draw(SDL_Renderer* renderer, SDL_FRect* pane) {
         };
         content->Draw(renderer, &contentPane);
     }
+}
+
+void Border::debug_print_content(int depth) {
+    for (int i = 0; i < depth; i++) {
+        printf("|   ");
+    }
+
+    printf("Border @ %p (\n", this);
+    if (content) content->debug_print_content(depth + 1);
+
+    for (int i = 0; i < depth; i++) {
+        printf("|   ");
+    }
+    printf(")\n");
 }

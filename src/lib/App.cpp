@@ -31,8 +31,11 @@ void App::Run(int debug_print_visual_tree) {
 }
 
 void App::debug_print_content() {
-    printf("App @ %p\n", this);
+    printf("App @ %p (\n", this);
+    window->debug_print_content(1);
+    printf(")\n");
 }
+
 
 App::~App() {
     delete window;

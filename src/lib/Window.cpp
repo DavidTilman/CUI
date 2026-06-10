@@ -1,5 +1,6 @@
 #include "Window.h"
 #include <SDL3/SDL_rect.h>
+#include <cstdio>
 
 Window::Window() {
     if (!SDL_Init(SDL_INIT_VIDEO)) {
@@ -34,6 +35,21 @@ void Window::Present() {
     if (content) content->Draw(renderer, &pane);
 
     SDL_RenderPresent(renderer);
+}
+
+void Window::debug_print_content(int depth) {
+    for (int i = 0; i < depth; i++) {
+        printf("|   ");
+    }
+
+    printf("Window @ %p (\n", this);
+
+    if (content) content->debug_print_content(depth + 1);
+
+    for (int i = 0; i < depth; i++) {
+        printf("|   ");
+    }
+    printf(")\n");
 }
 
 Window::~Window() {

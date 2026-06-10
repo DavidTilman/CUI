@@ -16,6 +16,7 @@ add_executable(CUI
     src/lib/Rectangle.cpp
     src/lib/Border.cpp
     src/lib/TextBlock.cpp
+    src/lib/UniformGrid.cpp
 )
 
 target_include_directories(CUI PRIVATE src/lib)

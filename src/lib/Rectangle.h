@@ -7,6 +7,7 @@
 class Rectangle : public UIElement {
 public:
     void Draw(SDL_Renderer* renderer, SDL_FRect* pane) override;
+    void debug_print_content(int depth) override;
 
     Color fill = Colors::Black;
 };

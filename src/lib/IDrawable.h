@@ -5,4 +5,5 @@ class IDrawable {
 public:
     virtual void Draw(SDL_Renderer* renderer, SDL_FRect *pane) = 0;
     virtual ~IDrawable() = default;
+    virtual void debug_print_content(int depth) {}
 };
