@@ -2,20 +2,18 @@
 
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_events.h>
-#include <SDL3_ttf/SDL_ttf.h>
 #include <cstdio>
 
 App::App() {
-    TTF_Init();
     window = new Window();
 }
 
 void App::Run(int debug_print_visual_tree) {
     Content();
+    window->Initialize();
 
     if (debug_print_visual_tree) debug_print_content();
 
-    window->Initialize();
 
     bool running = true;
     SDL_Event event;
@@ -38,6 +36,4 @@ void App::debug_print_content() {
 
 App::~App() {
     delete window;
-    TTF_Quit();
-    SDL_Quit();
 }

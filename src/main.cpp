@@ -1,17 +1,9 @@
-#include "App.h"
-#include "Rectangle.h"
-#include "Size.h"
-#include "TextBlock.h"
-#include "Border.h"
-
-#include <SDL3/SDL.h>
-#include <SDL3/SDL_main.h>
-#include "Thickness.h"
-#include "UniformGrid.h"
+#include "CUI.h"
 
 class MyApp : public App {
 protected:
     void Content() override {
+
         UniformGrid *grid = new UniformGrid();
         grid->columns = 2;
         grid->rows = 2;
