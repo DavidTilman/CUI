@@ -17,6 +17,7 @@ add_executable(CUI
     src/lib/Border.cpp
     src/lib/TextBlock.cpp
     src/lib/UniformGrid.cpp
+    src/lib/Button.cpp
 )
 
 target_include_directories(CUI PRIVATE src/lib)

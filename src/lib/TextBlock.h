@@ -1,6 +1,7 @@
 #pragma once
 #include "UIElement.h"
 #include "Color.h"
+#include "Thickness.h"
 
 #include <SDL3/SDL.h>
 
@@ -13,4 +14,5 @@ public:
     Color foreground = Colors::White;
     float fontSize = 12;
     const char * fontFamily = nullptr;
+    Thickness padding = Thickness();
 };

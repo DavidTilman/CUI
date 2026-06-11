@@ -10,17 +10,19 @@ void TextBlock::Draw(SDL_Renderer* renderer, SDL_FRect* pane) {
     if (!this->text) return;
     if (!this->fontFamily) return;
 
-    SDL_SetRenderDrawColor(renderer, background.R, background.G, background.B, background.A);
-    SDL_RenderFillRect(renderer, pane);
+    SDL_FRect dst = Measure(pane);
 
-    TTF_Font* font = TTF_OpenFont(fontFamily, fontSize);  // ptsize is float in SDL3
+    SDL_SetRenderDrawColor(renderer, background.R, background.G, background.B, background.A);
+    SDL_RenderFillRect(renderer, &dst);
+
+    TTF_Font* font = TTF_OpenFont(fontFamily, fontSize);
 
     TTF_TextEngine* engine = TTF_CreateRendererTextEngine(renderer);
 
-    TTF_Text* ttfText = TTF_CreateText(engine, font, text, 0);  // 0 = auto length
+    TTF_Text* ttfText = TTF_CreateText(engine, font, text, 0);
 
     TTF_SetTextColor(ttfText, foreground.R, foreground.G, foreground.B, foreground.A);
-    TTF_DrawRendererText(ttfText, pane->x, pane->y);
+    TTF_DrawRendererText(ttfText, dst.x + (float)padding.l, dst.y + (float)padding.t);
 
     TTF_DestroyText(ttfText);
     TTF_DestroyRendererTextEngine(engine);
@@ -36,5 +38,7 @@ void TextBlock::debug_print_content(const std::string& prefix, bool is_last) {
     printf("%s%-12s = %.1f\n",            ppfx.c_str(), "fontSize",   fontSize);
     printf("%s%-12s = #%02X%02X%02X%02X\n", ppfx.c_str(), "foreground", foreground.R, foreground.G, foreground.B, foreground.A);
     printf("%s%-12s = #%02X%02X%02X%02X\n", ppfx.c_str(), "background", background.R, background.G, background.B, background.A);
+    printf("%s%-12s = l=%u r=%u t=%u b=%u\n", ppfx.c_str(), "padding",   padding.l, padding.r, padding.t, padding.b);
+    printf("%s%-12s = l=%u r=%u t=%u b=%u\n", ppfx.c_str(), "margin",    margin.l, margin.r, margin.t, margin.b);
     printf("%s%-12s = %.0f x %.0f\n",     ppfx.c_str(), "size",       width, height);
 }
