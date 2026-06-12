@@ -1,15 +1,22 @@
 #include "CUI.h"
 
 class MyApp : public App {
+private:
+    int counter = 0;
+
 protected:
     void Content() override {
         Button *myButton = new Button();
         myButton->text = "button";
         myButton->fontFamily = "src/assets/fonts/OpenSans-Regular.ttf";
+        myButton->onClick = [this]{ counter++; };
 
-        myButton->onClick = []{ printf("holy click batman!\n"); };
+        TextBlock *myTextBlock = new TextBlock();
+        myTextBlock->textBinding = [this]{ return "Count: " + std::to_string(counter); };
+        myTextBlock->fontFamily = "src/assets/fonts/OpenSans-Regular.ttf";
 
-        window->padding = Thickness(100);
+        myButton->textblock = myTextBlock;
+
         window->content = myButton;
     }
 };

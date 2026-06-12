@@ -7,7 +7,14 @@
 #include <string>
 
 void TextBlock::Draw(SDL_Renderer* renderer, SDL_FRect* pane) {
-    if (!this->text) return;
+    std::string boundText;
+    const char* displayText = text;
+    if (textBinding) {
+        boundText = textBinding();
+        displayText = boundText.c_str();
+    }
+
+    if (!displayText) return;
     if (!this->fontFamily) return;
 
     SDL_FRect dst = Measure(pane);
@@ -19,9 +26,10 @@ void TextBlock::Draw(SDL_Renderer* renderer, SDL_FRect* pane) {
 
     TTF_TextEngine* engine = TTF_CreateRendererTextEngine(renderer);
 
-    TTF_Text* ttfText = TTF_CreateText(engine, font, text, 0);
+    TTF_Text* ttfText = TTF_CreateText(engine, font, displayText, 0);
 
     TTF_SetTextColor(ttfText, foreground.R, foreground.G, foreground.B, foreground.A);
+
     TTF_DrawRendererText(ttfText, dst.x + (float)padding.l, dst.y + (float)padding.t);
 
     TTF_DestroyText(ttfText);
